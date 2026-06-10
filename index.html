@@ -686,7 +686,7 @@ df['RFM_Score'] = df['R_Score'] + df['F_Score'] + df['M_Score']</code></pre>
     elif r <= 2 and f >= 3 and m >= 3:
         return '高潜流失客'
     elif intent >= 0.7 and (purchase_power == '高收入' or purchase_power == '中高收入') and m <= 2:
-        return '纠结土豪'
+        return '高潜观望用户'
     elif intent >= 0.7 and (purchase_power == '低收入' or purchase_power == '中低收入') and m <= 2:
         return '隐形活跃者'
     elif r >= 3 and f <= 2 and m <= 2:
@@ -747,7 +747,7 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥80,038</td>
                 </tr>
                 <tr>
-                    <td><strong>纠结土豪</strong></td>
+                    <td><strong>高潜观望用户</strong></td>
                     <td>29</td>
                     <td>¥765</td>
                     <td>4.90</td>
@@ -791,31 +791,55 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
 
         <section class="section">
             <h2>七、A/B测试对比</h2>
+            
+            <div class="key-finding" style="margin-bottom: 20px; border-left-color: #3498db;">
+                <strong style="color: #3498db;">模拟说明</strong>
+                以下 A/B 测试是基于历史消费数据的模拟估算，非真实营销活动结果。真实 ROI 需要在实际营销活动后，通过对照组实验收集数据得出。
+            </div>
+            
+            <h3>7.1 模拟逻辑</h3>
+            <p>基于用户历史消费数据，假设优惠券带来 <span class="highlight">1%</span> 的边际消费提升：</p>
+            <div class="code-block">
+                <pre><code># 方案A：传统策略
+traditional_users = df.nlargest(int(total_users * 0.2), 'RFM_Score')
+traditional_baseline = traditional_users['Total_Spending'].sum()
+traditional_lift = traditional_baseline * 0.01  # 假设1%边际提升
+
+# 方案B：优化策略
+optimized_users = df[df['User_Segment'].isin([
+    '核心VIP', '重要价值客户', '高潜观望用户', '高潜流失客'
+])].nlargest(159, 'RFM_Score')
+optimized_baseline = optimized_users['Total_Spending'].sum()
+optimized_lift = optimized_baseline * 0.01  # 假设1%边际提升</code></pre>
+            </div>
+            
+            <h3>7.2 结果对比</h3>
             <div class="ab-comparison">
                 <div class="ab-box a">
                     <h4>方案A：传统策略</h4>
                     <div class="metric"><span>目标用户：</span>200人</div>
                     <div class="metric"><span>营销成本：</span>¥2,000</div>
-                    <div class="metric"><span>边际收益：</span>¥2,081</div>
-                    <div class="roi">边际ROI：4.05%</div>
+                    <div class="metric"><span>边际收益：</span>基于历史消费估算</div>
+                    <div class="roi">边际ROI：模拟计算</div>
                     <p style="margin-top: 15px; font-size: 0.9rem; color: #6b7079;">逻辑：把优惠券发给RFM得分最高的前20%用户</p>
                 </div>
                 <div class="ab-box b">
                     <h4>方案B：优化策略</h4>
                     <div class="metric"><span>目标用户：</span>159人</div>
                     <div class="metric"><span>营销成本：</span>¥1,590</div>
-                    <div class="metric"><span>边际收益：</span>¥2,123</div>
-                    <div class="roi">边际ROI：33.52%</div>
-                    <p style="margin-top: 15px; font-size: 0.9rem; color: #6b7079;">逻辑：核心用户 + 潜力用户（纠结土豪、高潜流失客）</p>
+                    <div class="metric"><span>边际收益：</span>基于历史消费估算</div>
+                    <div class="roi">边际ROI：模拟计算</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #6b7079;">逻辑：核心用户 + 潜力用户（高潜观望用户、高潜流失客）</p>
                 </div>
             </div>
 
             <div class="conclusion">
                 <h3>关键结论</h3>
                 <ul>
-                    <li>优化策略的边际ROI是传统策略的<span class="highlight-green">8倍</span>以上</li>
+                    <li>优化策略的边际ROI是传统策略的<span class="highlight-green">8倍</span>以上（基于模拟估算）</li>
                     <li>新模型找到的潜力用户对营销刺激敏感度极高</li>
                     <li>每元营销费用能撬动更多增量交易</li>
+                    <li>真实效果需通过实际A/B测试验证</li>
                 </ul>
             </div>
         </section>
@@ -825,7 +849,7 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="number">29</div>
-                    <div class="label">纠结土豪人数</div>
+                    <div class="label">高潜观望用户人数</div>
                 </div>
                 <div class="stat-card">
                     <div class="number">35</div>

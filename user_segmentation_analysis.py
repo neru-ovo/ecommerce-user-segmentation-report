@@ -96,7 +96,7 @@ def segment_user(row):
     elif r <= 2 and f >= 3 and m >= 3:
         return '高潜流失客'
     elif intent >= 0.7 and (purchase_power == '高收入' or purchase_power == '中高收入') and m <= 2:
-        return '纠结土豪'
+        return '高潜观望用户'
     elif intent >= 0.7 and (purchase_power == '低收入' or purchase_power == '中低收入') and m <= 2:
         return '隐形活跃者'
     elif r >= 3 and f <= 2 and m <= 2:
@@ -133,30 +133,60 @@ segment_features = df.groupby('User_Segment').agg({
 print(segment_features)
 
 print("\n=== A/B测试模拟 ===")
+print("\n【模拟说明】")
+print("以下 A/B 测试是基于历史数据的模拟估算，非真实营销活动结果。")
+print("真实 ROI 需要在实际营销活动后，通过对照组实验收集数据得出。")
 
 total_users = df.shape[0]
 budget_per_user = 10
 
+print("\n【方案A：传统策略】")
+print("选择 RFM 分数最高的 20% 用户")
+
+# 方案A：传统策略 - 选择 RFM 分数最高的 20% 用户
 traditional_users = df.nlargest(int(total_users * 0.2), 'RFM_Score')
 traditional_cost = len(traditional_users) * budget_per_user
-traditional_lift = 2081
 
-optimized_df = df[(df['User_Segment'].isin(['核心VIP', '重要价值客户', '纠结土豪', '高潜流失客']))]
+# 基于历史消费数据模拟边际收益
+# 假设：传统策略用户本身消费意愿强，优惠券带来的增量有限
+traditional_baseline_spending = traditional_users['Total_Spending'].sum()
+# 假设优惠券带来 1% 的边际消费提升
+traditional_lift = traditional_baseline_spending * 0.01
+
+print(f"  历史总消费: ¥{traditional_baseline_spending:,.0f}")
+print(f"  假设边际提升: 1%")
+print(f"  目标用户: {len(traditional_users)}人")
+print(f"  营销成本: ¥{traditional_cost:,}")
+
+# 方案B：优化策略 - 选择核心用户 + 潜力用户
+print("\n【方案B：优化策略】")
+print("选择：核心VIP + 重要价值客户 + 高潜观望用户 + 高潜流失客")
+
+optimized_df = df[(df['User_Segment'].isin(['核心VIP', '重要价值客户', '高潜观望用户', '高潜流失客']))]
 optimized_users = optimized_df.nlargest(159, 'RFM_Score')
 optimized_cost = len(optimized_users) * budget_per_user
-optimized_lift = 2123
 
-print("方案A（传统策略）:")
-print(f"  目标用户: {len(traditional_users)}人")
-print(f"  营销成本: {traditional_cost}元")
-print(f"  边际收益: {traditional_lift}元")
-print(f"  边际ROI: {(traditional_lift - traditional_cost) / traditional_cost:.2%}")
+# 基于历史消费数据模拟边际收益
+# 假设：潜力用户对营销刺激更敏感，边际提升更高
+optimized_baseline_spending = optimized_users['Total_Spending'].sum()
+# 假设优惠券带来 1% 的边际消费提升（相同假设，便于对比）
+optimized_lift = optimized_baseline_spending * 0.01
 
-print("\n方案B（优化策略）:")
+print(f"  历史总消费: ¥{optimized_baseline_spending:,.0f}")
+print(f"  假设边际提升: 1%")
 print(f"  目标用户: {len(optimized_users)}人")
-print(f"  营销成本: {optimized_cost}元")
-print(f"  边际收益: {optimized_lift}元")
+print(f"  营销成本: ¥{optimized_cost:,}")
+
+print("\n【结果对比】")
+print("-" * 50)
+print("方案A（传统策略）:")
+print(f"  边际收益: ¥{traditional_lift:,.0f}")
+print(f"  边际ROI: {(traditional_lift - traditional_cost) / traditional_cost:.2%}")
+print()
+print("方案B（优化策略）:")
+print(f"  边际收益: ¥{optimized_lift:,.0f}")
 print(f"  边际ROI: {(optimized_lift - optimized_cost) / optimized_cost:.2%}")
+print("-" * 50)
 
 print("\n=== 保存分析结果 ===")
 df.to_csv('user_segmentation_result.csv', index=False, encoding='utf-8-sig')
