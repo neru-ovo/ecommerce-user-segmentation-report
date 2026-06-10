@@ -29,6 +29,7 @@ ecommerce-user-segmentation-report/
 
 - 数据规模：1000 条用户记录
 - 字段数量：15 个
+- **数据来源**：[Kaggle - Ecommerce Product Recommendation](https://www.kaggle.com/datasets/kartikeybartwal/ecommerce-product-recommendation-collaborative)
 - 数据来源：电商平台用户行为与交易数据
 
 | 字段类型 | 字段名称 | 说明 |
@@ -107,8 +108,8 @@ python user_segmentation_analysis.py
 
 | 策略 | 目标用户 | 营销成本 | 边际收益 | 边际 ROI |
 |------|---------|---------|---------|---------|
-| 方案 A（传统） | 200 人 | ¥2,000 | ¥2,081 | 4.05% |
-| 方案 B（优化） | 159 人 | ¥1,590 | ¥2,123 | **33.52%** |
+| 方案 A（传统） | 200 人 | ¥2,000 | 基于历史消费估算 | 模拟计算 |
+| 方案 B（优化） | 159 人 | ¥1,590 | 基于历史消费估算 | **模拟计算** |
 
 ## 核心结论
 
