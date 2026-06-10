@@ -13,9 +13,13 @@
         
         body {
             font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a1d23;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(243, 156, 18, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(46, 204, 113, 0.04) 0%, transparent 50%);
             min-height: 100vh;
             padding: 20px;
+            color: #c8ccd4;
         }
         
         .container {
@@ -24,61 +28,110 @@
         }
         
         header {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, #242830 0%, #2a2f38 100%);
+            padding: 50px 40px;
+            border-radius: 16px;
             text-align: center;
             margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 1px solid #2f343e;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f39c12 0%, #3498db 50%, #2ecc71 100%);
         }
         
         header h1 {
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            color: #e8eaed;
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
         
         header p {
-            color: #666;
-            font-size: 1.1rem;
+            color: #a8aeb8;
+            font-size: 1.15rem;
+            font-weight: 400;
         }
         
         .section {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
+            background: #242830;
+            padding: 35px;
+            border-radius: 16px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 1px solid #2f343e;
         }
         
         .section h2 {
-            color: #667eea;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            color: #e8eaed;
+            font-size: 1.9rem;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2f343e;
             position: relative;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h2::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 24px;
+            background: #f39c12;
+            margin-right: 12px;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
         }
         
         .section h2::after {
             content: '';
             position: absolute;
-            bottom: -3px;
+            bottom: -1px;
             left: 0;
-            width: 60px;
-            height: 3px;
-            background: #764ba2;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #f39c12 0%, transparent 100%);
         }
         
         .section h3 {
-            color: #333;
+            color: #c8ccd4;
             font-size: 1.4rem;
             margin: 25px 0 15px;
+            font-weight: 500;
+            padding-left: 12px;
+            border-left: 3px solid #3498db;
+        }
+        
+        .section p {
+            color: #a8aeb8;
+            line-height: 1.7;
+        }
+        
+        .section ul li, .section ol li {
+            color: #a8aeb8;
+            line-height: 1.8;
+        }
+        
+        .section strong {
+            color: #e8eaed;
+            font-weight: 600;
         }
         
         .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
+            background: #1a1d23;
+            color: #c8ccd4;
             padding: 20px;
             border-radius: 10px;
             overflow-x: auto;
@@ -86,6 +139,8 @@
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 14px;
             line-height: 1.6;
+            border: 1px solid #2f343e;
+            border-left: 3px solid #3498db;
         }
         
         .code-block pre {
@@ -94,49 +149,100 @@
         }
         
         .code-block code {
-            color: #f8f8f2;
+            color: #c8ccd4;
         }
         
         .highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2px 8px;
+            background: rgba(243, 156, 18, 0.15);
+            color: #f39c12;
+            padding: 3px 10px;
             border-radius: 5px;
-            font-weight: bold;
+            font-weight: 700;
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            font-size: 1.05em;
+        }
+        
+        .highlight-blue {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            font-size: 1.05em;
+        }
+        
+        .highlight-green {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            font-size: 1.05em;
         }
         
         .key-finding {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px 20px;
-            margin: 15px 0;
+            background: linear-gradient(135deg, #2a2f38 0%, #2f343e 100%);
+            border-left: 4px solid #f39c12;
+            padding: 20px 25px;
+            margin: 20px 0;
             border-radius: 0 10px 10px 0;
+            border-top: 1px solid #2f343e;
+            border-right: 1px solid #2f343e;
+            border-bottom: 1px solid #2f343e;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .key-finding::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #f39c12;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
         }
         
         .key-finding strong {
-            color: #856404;
+            color: #f39c12;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 8px;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            background: #1a1d23;
+            border-radius: 10px;
+            overflow: hidden;
         }
         
         table th, table td {
-            padding: 12px 15px;
+            padding: 14px 15px;
             text-align: left;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #2f343e;
+            color: #a8aeb8;
         }
         
         table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #2a2f38;
+            color: #c8ccd4;
             font-weight: 600;
+            border-bottom: 2px solid #3a4150;
+            font-size: 0.95rem;
         }
         
         table tr:hover {
-            background: #f8f9fa;
+            background: #2a2f38;
+        }
+        
+        table td strong {
+            color: #e8eaed;
         }
         
         .stats-grid {
@@ -147,108 +253,162 @@
         }
         
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #2a2f38 0%, #242830 100%);
+            color: #c8ccd4;
+            padding: 30px 25px;
+            border-radius: 12px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            border: 1px solid #2f343e;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #f39c12;
+            opacity: 0.6;
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.2);
+            border-color: #f39c12;
         }
         
         .stat-card .number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #f39c12;
+            text-shadow: 0 0 20px rgba(243, 156, 18, 0.3);
+            letter-spacing: 1px;
         }
         
         .stat-card .label {
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 0.95rem;
+            color: #8a8f9a;
+            font-weight: 500;
         }
         
         .chart-container {
             width: 100%;
             margin: 20px 0;
             text-align: center;
+            background: #2a2f38;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #2f343e;
         }
         
         .chart-container img {
             max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
         
         .ab-comparison {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            margin: 20px 0;
+            margin: 25px 0;
         }
         
         .ab-box {
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 12px;
             text-align: center;
+            border: 1px solid #2f343e;
+            position: relative;
         }
         
         .ab-box.a {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
+            background: #2a2f38;
+            border-left: 3px solid #6b7585;
         }
         
         .ab-box.b {
-            background: #d4edda;
-            border: 2px solid #28a745;
+            background: #2a2f38;
+            border-left: 3px solid #2ecc71;
         }
         
         .ab-box h4 {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             margin-bottom: 20px;
+            color: #c8ccd4;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2f343e;
         }
         
         .ab-box .metric {
-            margin: 10px 0;
+            margin: 12px 0;
+            color: #a8aeb8;
+            font-size: 1rem;
         }
         
         .ab-box .metric span {
             display: inline-block;
             width: 120px;
             text-align: left;
+            color: #8a8f9a;
         }
         
         .ab-box .roi {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: 800;
             margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 18px;
+            border-radius: 8px;
+            letter-spacing: 1px;
         }
         
         .ab-box.a .roi {
-            background: #ffeeba;
-            color: #856404;
+            background: #1a1d23;
+            color: #6b7079;
+            border: 1px solid #2f343e;
         }
         
         .ab-box.b .roi {
-            background: #c3e6cb;
-            color: #155724;
+            background: #1a1d23;
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.15);
         }
         
         .conclusion {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #2a2f38 0%, #2f343e 100%);
+            color: #c8ccd4;
             padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid #2f343e;
+            border-left: 4px solid #2ecc71;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .conclusion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #2ecc71;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
         }
         
         .conclusion h3 {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            color: #2ecc71;
+            font-size: 1.4rem;
+            font-weight: 600;
         }
         
         .conclusion ul {
@@ -256,57 +416,70 @@
         }
         
         .conclusion li {
-            padding: 10px 0;
-            padding-left: 25px;
+            padding: 10px 0 10px 28px;
             position: relative;
+            color: #a8aeb8;
+            line-height: 1.7;
         }
         
         .conclusion li::before {
-            content: '✓';
+            content: '●';
             position: absolute;
-            left: 0;
-            color: #00ff88;
-            font-weight: bold;
+            left: 5px;
+            top: 10px;
+            color: #2ecc71;
+            font-size: 1.2rem;
         }
         
-        .deployment {
-            background: #f8f9fa;
-            border: 2px dashed #dee2e6;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
+        .formula {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+            margin: 12px 0;
+            color: #c8ccd4;
+            font-family: 'Consolas', 'Monaco', monospace;
         }
         
-        .deployment h4 {
-            color: #333;
-            margin-bottom: 15px;
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0 4px;
         }
         
-        .deployment ol {
-            padding-left: 25px;
-            line-height: 1.8;
+        .tag-orange {
+            background: rgba(243, 156, 18, 0.15);
+            color: #f39c12;
+            border: 1px solid rgba(243, 156, 18, 0.4);
         }
         
-        .deployment code {
-            background: #e9ecef;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-family: 'Consolas', monospace;
-            font-size: 0.9rem;
+        .tag-blue {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            border: 1px solid rgba(52, 152, 219, 0.4);
+        }
+        
+        .tag-green {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.4);
         }
         
         footer {
             text-align: center;
-            color: white;
+            color: #6b7079;
             padding: 20px;
-            opacity: 0.8;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 电商用户价值分层分析报告</h1>
+            <h1>电商用户价值分层分析报告</h1>
             <p>基于RFM模型优化的用户价值评估体系</p>
         </header>
 
@@ -407,8 +580,8 @@ corr_matrix = df[numeric_cols].corr()</code></pre>
 
             <h3>3.2 关键发现</h3>
             <div class="key-finding">
-                <strong>🔍 关键发现一：停留时间与购买频率几乎不相关</strong><br>
-                相关系数：<span class="highlight">-0.0282</span><br>
+                <strong>关键发现一：停留时间与购买频率几乎不相关</strong>
+                相关系数：<span class="highlight">-0.0282</span>
                 业务含义：平台存在大量"观光团"用户，贡献流量但没贡献销售额。从传统RFM视角会被归为低价值用户，但从行为数据视角，他们展现了强烈的购买意向。
             </div>
 
@@ -421,9 +594,9 @@ high_income_below_avg = high_income_users[high_income_users['Total_Spending'] < 
             </div>
 
             <div class="key-finding">
-                <strong>🔍 关键发现二：高收入群体消费低于平均</strong><br>
-                高收入群体人数：<span class="highlight">250人</span><br>
-                消费低于平均水平的人数：<span class="highlight">134人（53.6%）</span><br>
+                <strong>关键发现二：高收入群体消费低于平均</strong>
+                高收入群体人数：<span class="highlight">250人</span>
+                消费低于平均水平的人数：<span class="highlight">134人（53.6%）</span>
                 业务含义：这类用户是典型的"沉睡土豪"，有消费能力但还没有被激活，是精准营销的重点对象。
             </div>
         </section>
@@ -438,7 +611,7 @@ df['Time_Spent_Score'] = scaler.fit_transform(df[['Time_Spent_on_Site_Minutes']]
 df['Pages_Viewed_Score'] = scaler.fit_transform(df[['Pages_Viewed']])
 df['Intent_Score'] = df['Time_Spent_Score'] * 0.5 + df['Pages_Viewed_Score'] * 0.5</code></pre>
             </div>
-            <p><strong>计算公式：</strong>意向度 = 停留时长得分 × 0.5 + 浏览页数得分 × 0.5</p>
+            <div class="formula">计算公式：意向度 = 停留时长得分 × 0.5 + 浏览页数得分 × 0.5</div>
 
             <h3>4.2 转化摩擦系数</h3>
             <p>衡量用户的纠结程度，用户看了多少页才会买一次。</p>
@@ -543,8 +716,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                 </tr>
                 <tr>
                     <td><strong>核心VIP</strong></td>
-                    <td>25</td>
-                    <td>¥4,046</td>
+                    <td><span class="highlight-orange">25</span></td>
+                    <td><strong>¥4,046</strong></td>
                     <td>8.04</td>
                     <td>-</td>
                     <td>¥67,696</td>
@@ -578,15 +751,15 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>29</td>
                     <td>¥765</td>
                     <td>4.90</td>
-                    <td><span class="highlight">高</span></td>
-                    <td><span class="highlight">¥114,065</span></td>
+                    <td><span class="tag tag-orange">高</span></td>
+                    <td><span class="tag tag-orange">¥114,065</span></td>
                 </tr>
                 <tr>
                     <td><strong>隐形活跃者</strong></td>
                     <td>35</td>
                     <td>¥862</td>
                     <td>3.26</td>
-                    <td><span class="highlight">高</span></td>
+                    <td><span class="tag tag-orange">高</span></td>
                     <td>¥47,121</td>
                 </tr>
                 <tr>
@@ -620,27 +793,27 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
             <h2>七、A/B测试对比</h2>
             <div class="ab-comparison">
                 <div class="ab-box a">
-                    <h4>📌 方案A：传统策略</h4>
+                    <h4>方案A：传统策略</h4>
                     <div class="metric"><span>目标用户：</span>200人</div>
                     <div class="metric"><span>营销成本：</span>¥2,000</div>
                     <div class="metric"><span>边际收益：</span>¥2,081</div>
                     <div class="roi">边际ROI：4.05%</div>
-                    <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">逻辑：把优惠券发给RFM得分最高的前20%用户</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #6b7079;">逻辑：把优惠券发给RFM得分最高的前20%用户</p>
                 </div>
                 <div class="ab-box b">
-                    <h4>🚀 方案B：优化策略</h4>
+                    <h4>方案B：优化策略</h4>
                     <div class="metric"><span>目标用户：</span>159人</div>
                     <div class="metric"><span>营销成本：</span>¥1,590</div>
                     <div class="metric"><span>边际收益：</span>¥2,123</div>
                     <div class="roi">边际ROI：33.52%</div>
-                    <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">逻辑：核心用户 + 潜力用户（纠结土豪、高潜流失客）</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #6b7079;">逻辑：核心用户 + 潜力用户（纠结土豪、高潜流失客）</p>
                 </div>
             </div>
 
             <div class="conclusion">
-                <h3>💡 关键结论</h3>
+                <h3>关键结论</h3>
                 <ul>
-                    <li>优化策略的边际ROI是传统策略的<span class="highlight">8倍</span>以上</li>
+                    <li>优化策略的边际ROI是传统策略的<span class="highlight-green">8倍</span>以上</li>
                     <li>新模型找到的潜力用户对营销刺激敏感度极高</li>
                     <li>每元营销费用能撬动更多增量交易</li>
                 </ul>
@@ -650,53 +823,32 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
         <section class="section">
             <h2>八、核心启示</h2>
             <div class="stats-grid">
-                <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="stat-card">
                     <div class="number">29</div>
                     <div class="label">纠结土豪人数</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="stat-card">
                     <div class="number">35</div>
                     <div class="label">隐形活跃者人数</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <div class="stat-card">
                     <div class="number">187</div>
                     <div class="label">高潜流失客人数</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <div class="stat-card">
                     <div class="number">8×</div>
                     <div class="label">ROI提升倍数</div>
                 </div>
             </div>
 
             <div class="key-finding">
-                <strong>🌟 项目最大价值</strong><br>
+                <strong>项目最大价值</strong>
                 传统RFM模型只看用户花了多少钱，新模型开始看用户花了多少时间、有多少预算。这种视角的转变带来了全新的用户群体发现和更精准的营销策略。
             </div>
         </section>
 
-        <section class="section">
-            <h2>九、GitHub部署指南</h2>
-            <div class="deployment">
-                <h4>📝 部署步骤：</h4>
-                <ol>
-                    <li>登录你的GitHub账号，创建一个新仓库</li>
-                    <li>将以下文件上传到仓库：
-                        <ul style="margin: 5px 0 5px 20px;">
-                            <li><code>index.html</code> - 报告主页面</li>
-                            <li><code>correlation_heatmap.png</code> - 相关性热力图</li>
-                            <li><code>user_segment_distribution.png</code> - 用户分层分布图</li>
-                        </ul>
-                    </li>
-                    <li>进入仓库的 <code>Settings</code> → <code>Pages</code></li>
-                    <li>在 <code>Source</code> 选项中选择 <code>main</code> 分支和 <code>/root</code> 目录</li>
-                    <li>点击 <code>Save</code>，等待几分钟后页面会自动部署</li>
-                    <li>访问地址格式：<code>https://你的用户名.github.io/仓库名/</code></li>
-                </ol>
-            </div>
-        </section>
-
         <footer>
-            <p>© 2024 电商用户价值分层分析报告 | 数据分析项目</p>
+            <p>© 关艺贤 | 电商用户价值分层分析报告 | 数据分析项目</p>
         </footer>
     </div>
 </body>
