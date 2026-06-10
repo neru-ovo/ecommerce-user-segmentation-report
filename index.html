@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电商用户价值分层分析报告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #764ba2;
+        }
+        
+        .section h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .code-block code {
+            color: #f8f8f2;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .key-finding {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .key-finding strong {
+            color: #856404;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .chart-container {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .chart-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .ab-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .ab-box {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .ab-box.a {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+        
+        .ab-box.b {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+        
+        .ab-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        
+        .ab-box .metric {
+            margin: 10px 0;
+        }
+        
+        .ab-box .metric span {
+            display: inline-block;
+            width: 120px;
+            text-align: left;
+        }
+        
+        .ab-box .roi {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .ab-box.a .roi {
+            background: #ffeeba;
+            color: #856404;
+        }
+        
+        .ab-box.b .roi {
+            background: #c3e6cb;
+            color: #155724;
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .conclusion h3 {
+            margin-bottom: 15px;
+        }
+        
+        .conclusion ul {
+            list-style: none;
+        }
+        
+        .conclusion li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .conclusion li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+        
+        .deployment {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .deployment h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .deployment ol {
+            padding-left: 25px;
+            line-height: 1.8;
+        }
+        
+        .deployment code {
+            background: #e9ecef;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 电商用户价值分层分析报告</h1>
+            <p>基于RFM模型优化的用户价值评估体系</p>
+        </header>
+
+        <section class="section">
+            <h2>一、项目背景</h2>
+            <p>在电商行业，用户分层是精准营销的基础。运营团队每天面临的核心问题：</p>
+            <ul style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                <li>有限的营销预算应该投放给谁？</li>
+                <li>优惠券发给谁最有效？</li>
+                <li>哪些用户值得重点维护？</li>
+                <li>哪些用户已经流失，需要挽回？</li>
+            </ul>
+            <p>传统的RFM模型存在两大缺陷：</p>
+            <ol style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                <li><strong>无法识别高潜观望者</strong>：有些用户天天来逛平台但不花钱</li>
+                <li><strong>一刀切看待消费金额</strong>：高收入用户和低收入用户的同等消费背后价值不同</li>
+            </ol>
+        </section>
+
+        <section class="section">
+            <h2>二、数据概览</h2>
+            <h3>2.1 加载数据</h3>
+            <div class="code-block">
+                <pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
+
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+df = pd.read_csv('user_personalized_features.csv')</code></pre>
+            </div>
+
+            <h3>2.2 数据基本信息</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">1000</div>
+                    <div class="label">用户数量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">15</div>
+                    <div class="label">数据字段</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">0</div>
+                    <div class="label">缺失值</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">18-64</div>
+                    <div class="label">年龄范围</div>
+                </div>
+            </div>
+
+            <h3>2.3 数据字段说明</h3>
+            <table>
+                <tr>
+                    <th>字段类型</th>
+                    <th>字段名称</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td>用户画像</td>
+                    <td>Age, Gender, Location, Income</td>
+                    <td>基本人口统计信息</td>
+                </tr>
+                <tr>
+                    <td>消费数据</td>
+                    <td>Purchase_Frequency, Total_Spending</td>
+                    <td>传统RFM指标</td>
+                </tr>
+                <tr>
+                    <td>行为数据</td>
+                    <td>Time_Spent_on_Site_Minutes, Pages_Viewed</td>
+                    <td>网站访问行为</td>
+                </tr>
+                <tr>
+                    <td>其他</td>
+                    <td>Interests, Newsletter_Subscription</td>
+                    <td>兴趣爱好与订阅状态</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>三、探索性数据分析（EDA）</h2>
+            <h3>3.1 相关性分析</h3>
+            <div class="code-block">
+                <pre><code>numeric_cols = ['Age', 'Income', 'Last_Login_Days_Ago', 'Purchase_Frequency', 
+                'Average_Order_Value', 'Total_Spending', 'Time_Spent_on_Site_Minutes', 'Pages_Viewed']
+
+corr_matrix = df[numeric_cols].corr()</code></pre>
+            </div>
+            <div class="chart-container">
+                <img src="correlation_heatmap.png" alt="相关性热力图">
+            </div>
+
+            <h3>3.2 关键发现</h3>
+            <div class="key-finding">
+                <strong>🔍 关键发现一：停留时间与购买频率几乎不相关</strong><br>
+                相关系数：<span class="highlight">-0.0282</span><br>
+                业务含义：平台存在大量"观光团"用户，贡献流量但没贡献销售额。从传统RFM视角会被归为低价值用户，但从行为数据视角，他们展现了强烈的购买意向。
+            </div>
+
+            <div class="code-block">
+                <pre><code># 高收入群体消费分析
+high_income_threshold = df['Income'].quantile(0.75)
+high_income_users = df[df['Income'] >= high_income_threshold]
+avg_total_spending = df['Total_Spending'].mean()
+high_income_below_avg = high_income_users[high_income_users['Total_Spending'] < avg_total_spending].shape[0]</code></pre>
+            </div>
+
+            <div class="key-finding">
+                <strong>🔍 关键发现二：高收入群体消费低于平均</strong><br>
+                高收入群体人数：<span class="highlight">250人</span><br>
+                消费低于平均水平的人数：<span class="highlight">134人（53.6%）</span><br>
+                业务含义：这类用户是典型的"沉睡土豪"，有消费能力但还没有被激活，是精准营销的重点对象。
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>四、指标构建</h2>
+            <h3>4.1 意向度指标</h3>
+            <p>衡量用户到底想不想买，将停留时长和浏览页数归一化后加权求和。</p>
+            <div class="code-block">
+                <pre><code>scaler = MinMaxScaler(feature_range=(0, 1))
+df['Time_Spent_Score'] = scaler.fit_transform(df[['Time_Spent_on_Site_Minutes']])
+df['Pages_Viewed_Score'] = scaler.fit_transform(df[['Pages_Viewed']])
+df['Intent_Score'] = df['Time_Spent_Score'] * 0.5 + df['Pages_Viewed_Score'] * 0.5</code></pre>
+            </div>
+            <p><strong>计算公式：</strong>意向度 = 停留时长得分 × 0.5 + 浏览页数得分 × 0.5</p>
+
+            <h3>4.2 转化摩擦系数</h3>
+            <p>衡量用户的纠结程度，用户看了多少页才会买一次。</p>
+            <div class="code-block">
+                <pre><code>df['Conversion_Friction'] = df['Pages_Viewed'] / (df['Purchase_Frequency'] + 1)</code></pre>
+            </div>
+
+            <h3>4.3 活跃连接度</h3>
+            <p>用行为忠诚替代名义忠诚，结合订阅状态和登录行为。</p>
+            <div class="code-block">
+                <pre><code>def calculate_active_connection(row):
+    subscribed = row['Newsletter_Subscription']
+    last_login = row['Last_Login_Days_Ago']
+    if subscribed and last_login <= 7:
+        return 3  # 高
+    elif not subscribed and last_login <= 7:
+        return 2  # 中
+    else:
+        return 1  # 低
+
+df['Active_Connection'] = df.apply(calculate_active_connection, axis=1)</code></pre>
+            </div>
+
+            <h3>4.4 购买力背景</h3>
+            <p>基于收入分层，作为分层后的修正标签。</p>
+            <div class="code-block">
+                <pre><code>income_bins = [0, 40000, 80000, 120000, float('inf')]
+income_labels = ['低收入', '中低收入', '中高收入', '高收入']
+df['Purchase_Power'] = pd.cut(df['Income'], bins=income_bins, labels=income_labels)</code></pre>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>五、RFM模型构建</h2>
+            <div class="code-block">
+                <pre><code># R值：最近一次购买时间（越小越好，所以取反）
+df['R_Score'] = pd.qcut(df['Last_Login_Days_Ago'], q=5, labels=[1, 2, 3, 4, 5]).astype(int)
+df['R_Score'] = 5 - df['R_Score']  # 转换为：最近登录的得分高
+
+# F值：购买频率
+df['F_Score'] = pd.qcut(df['Purchase_Frequency'] + 1, q=5, labels=[1, 2, 3, 4, 5]).astype(int)
+
+# M值：消费金额
+df['M_Score'] = pd.qcut(df['Total_Spending'], q=5, labels=[1, 2, 3, 4, 5]).astype(int)
+
+# 综合RFM分数
+df['RFM_Score'] = df['R_Score'] + df['F_Score'] + df['M_Score']</code></pre>
+            </div>
+            <p><strong>RFM模型解读：</strong></p>
+            <ul style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                <li><strong>R（Recency）</strong>：最近一次登录时间，得分越高说明越活跃</li>
+                <li><strong>F（Frequency）</strong>：购买频率，得分越高说明越忠诚</li>
+                <li><strong>M（Monetary）</strong>：消费金额，得分越高说明贡献价值越大</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>六、用户分层结果</h2>
+            <h3>6.1 分层规则</h3>
+            <div class="code-block">
+                <pre><code>def segment_user(row):
+    r, f, m = row['R_Score'], row['F_Score'], row['M_Score']
+    intent = row['Intent_Score']
+    purchase_power = row['Purchase_Power']
+    
+    if r >= 4 and f >= 4 and m >= 4:
+        return '核心VIP'
+    elif r >= 3 and f >= 3 and m >= 3:
+        return '重要价值客户'
+    elif r >= 3 and f >= 2 and m >= 2:
+        return '潜力客户'
+    elif r <= 2 and f >= 3 and m >= 3:
+        return '高潜流失客'
+    elif intent >= 0.7 and (purchase_power == '高收入' or purchase_power == '中高收入') and m <= 2:
+        return '纠结土豪'
+    elif intent >= 0.7 and (purchase_power == '低收入' or purchase_power == '中低收入') and m <= 2:
+        return '隐形活跃者'
+    elif r >= 3 and f <= 2 and m <= 2:
+        return '新客户'
+    elif r <= 2 and f <= 2 and m >= 3:
+        return '沉睡客户'
+    else:
+        return '普通用户'
+
+df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
+            </div>
+
+            <h3>6.2 分层分布</h3>
+            <div class="chart-container">
+                <img src="user_segment_distribution.png" alt="用户分层分布图">
+            </div>
+
+            <h3>6.3 各分层特征分析</h3>
+            <table>
+                <tr>
+                    <th>用户类型</th>
+                    <th>人数</th>
+                    <th>平均消费</th>
+                    <th>平均购买频率</th>
+                    <th>平均意向度</th>
+                    <th>平均收入</th>
+                </tr>
+                <tr>
+                    <td><strong>核心VIP</strong></td>
+                    <td>25</td>
+                    <td>¥4,046</td>
+                    <td>8.04</td>
+                    <td>-</td>
+                    <td>¥67,696</td>
+                </tr>
+                <tr>
+                    <td><strong>重要价值客户</strong></td>
+                    <td>108</td>
+                    <td>¥3,450</td>
+                    <td>6.74</td>
+                    <td>-</td>
+                    <td>¥86,568</td>
+                </tr>
+                <tr>
+                    <td><strong>高潜流失客</strong></td>
+                    <td>187</td>
+                    <td>¥3,575</td>
+                    <td>6.97</td>
+                    <td>-</td>
+                    <td>¥80,340</td>
+                </tr>
+                <tr>
+                    <td><strong>潜力客户</strong></td>
+                    <td>115</td>
+                    <td>¥2,265</td>
+                    <td>4.81</td>
+                    <td>-</td>
+                    <td>¥80,038</td>
+                </tr>
+                <tr>
+                    <td><strong>纠结土豪</strong></td>
+                    <td>29</td>
+                    <td>¥765</td>
+                    <td>4.90</td>
+                    <td><span class="highlight">高</span></td>
+                    <td><span class="highlight">¥114,065</span></td>
+                </tr>
+                <tr>
+                    <td><strong>隐形活跃者</strong></td>
+                    <td>35</td>
+                    <td>¥862</td>
+                    <td>3.26</td>
+                    <td><span class="highlight">高</span></td>
+                    <td>¥47,121</td>
+                </tr>
+                <tr>
+                    <td><strong>新客户</strong></td>
+                    <td>55</td>
+                    <td>¥878</td>
+                    <td>1.58</td>
+                    <td>-</td>
+                    <td>¥87,805</td>
+                </tr>
+                <tr>
+                    <td><strong>沉睡客户</strong></td>
+                    <td>166</td>
+                    <td>¥3,584</td>
+                    <td>1.98</td>
+                    <td>-</td>
+                    <td>¥78,739</td>
+                </tr>
+                <tr>
+                    <td><strong>普通用户</strong></td>
+                    <td>280</td>
+                    <td>¥1,623</td>
+                    <td>4.19</td>
+                    <td>-</td>
+                    <td>¥82,778</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>七、A/B测试对比</h2>
+            <div class="ab-comparison">
+                <div class="ab-box a">
+                    <h4>📌 方案A：传统策略</h4>
+                    <div class="metric"><span>目标用户：</span>200人</div>
+                    <div class="metric"><span>营销成本：</span>¥2,000</div>
+                    <div class="metric"><span>边际收益：</span>¥2,081</div>
+                    <div class="roi">边际ROI：4.05%</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">逻辑：把优惠券发给RFM得分最高的前20%用户</p>
+                </div>
+                <div class="ab-box b">
+                    <h4>🚀 方案B：优化策略</h4>
+                    <div class="metric"><span>目标用户：</span>159人</div>
+                    <div class="metric"><span>营销成本：</span>¥1,590</div>
+                    <div class="metric"><span>边际收益：</span>¥2,123</div>
+                    <div class="roi">边际ROI：33.52%</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">逻辑：核心用户 + 潜力用户（纠结土豪、高潜流失客）</p>
+                </div>
+            </div>
+
+            <div class="conclusion">
+                <h3>💡 关键结论</h3>
+                <ul>
+                    <li>优化策略的边际ROI是传统策略的<span class="highlight">8倍</span>以上</li>
+                    <li>新模型找到的潜力用户对营销刺激敏感度极高</li>
+                    <li>每元营销费用能撬动更多增量交易</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>八、核心启示</h2>
+            <div class="stats-grid">
+                <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="number">29</div>
+                    <div class="label">纠结土豪人数</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="number">35</div>
+                    <div class="label">隐形活跃者人数</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <div class="number">187</div>
+                    <div class="label">高潜流失客人数</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="number">8×</div>
+                    <div class="label">ROI提升倍数</div>
+                </div>
+            </div>
+
+            <div class="key-finding">
+                <strong>🌟 项目最大价值</strong><br>
+                传统RFM模型只看用户花了多少钱，新模型开始看用户花了多少时间、有多少预算。这种视角的转变带来了全新的用户群体发现和更精准的营销策略。
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>九、GitHub部署指南</h2>
+            <div class="deployment">
+                <h4>📝 部署步骤：</h4>
+                <ol>
+                    <li>登录你的GitHub账号，创建一个新仓库</li>
+                    <li>将以下文件上传到仓库：
+                        <ul style="margin: 5px 0 5px 20px;">
+                            <li><code>index.html</code> - 报告主页面</li>
+                            <li><code>correlation_heatmap.png</code> - 相关性热力图</li>
+                            <li><code>user_segment_distribution.png</code> - 用户分层分布图</li>
+                        </ul>
+                    </li>
+                    <li>进入仓库的 <code>Settings</code> → <code>Pages</code></li>
+                    <li>在 <code>Source</code> 选项中选择 <code>main</code> 分支和 <code>/root</code> 目录</li>
+                    <li>点击 <code>Save</code>，等待几分钟后页面会自动部署</li>
+                    <li>访问地址格式：<code>https://你的用户名.github.io/仓库名/</code></li>
+                </ol>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 电商用户价值分层分析报告 | 数据分析项目</p>
+        </footer>
+    </div>
+</body>
+</html>
