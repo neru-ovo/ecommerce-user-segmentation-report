@@ -716,6 +716,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <th>平均消费</th>
                     <th>平均购买频率</th>
                     <th>平均意向度</th>
+                    <th>平均转化摩擦</th>
+                    <th>平均活跃连接</th>
                     <th>平均收入</th>
                 </tr>
                 <tr>
@@ -724,6 +726,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td><strong>¥4,046</strong></td>
                     <td>8.04</td>
                     <td>-</td>
+                    <td>低</td>
+                    <td><span class="tag tag-green">高</span></td>
                     <td>¥67,696</td>
                 </tr>
                 <tr>
@@ -732,6 +736,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥3,450</td>
                     <td>6.74</td>
                     <td>-</td>
+                    <td>中</td>
+                    <td><span class="tag tag-green">高</span></td>
                     <td>¥86,568</td>
                 </tr>
                 <tr>
@@ -740,6 +746,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥3,575</td>
                     <td>6.97</td>
                     <td>-</td>
+                    <td>中</td>
+                    <td><span class="tag tag-orange">低</span></td>
                     <td>¥80,340</td>
                 </tr>
                 <tr>
@@ -748,6 +756,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥2,265</td>
                     <td>4.81</td>
                     <td>-</td>
+                    <td>中</td>
+                    <td>中</td>
                     <td>¥80,038</td>
                 </tr>
                 <tr>
@@ -756,6 +766,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥765</td>
                     <td>4.90</td>
                     <td><span class="tag tag-orange">高</span></td>
+                    <td><span class="tag tag-orange">高</span></td>
+                    <td>中</td>
                     <td><span class="tag tag-orange">¥114,065</span></td>
                 </tr>
                 <tr>
@@ -764,6 +776,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥862</td>
                     <td>3.26</td>
                     <td><span class="tag tag-orange">高</span></td>
+                    <td><span class="tag tag-orange">高</span></td>
+                    <td><span class="tag tag-green">高</span></td>
                     <td>¥47,121</td>
                 </tr>
                 <tr>
@@ -772,6 +786,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥878</td>
                     <td>1.58</td>
                     <td>-</td>
+                    <td><span class="tag tag-orange">高</span></td>
+                    <td><span class="tag tag-green">高</span></td>
                     <td>¥87,805</td>
                 </tr>
                 <tr>
@@ -780,6 +796,8 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥3,584</td>
                     <td>1.98</td>
                     <td>-</td>
+                    <td>低</td>
+                    <td><span class="tag tag-orange">低</span></td>
                     <td>¥78,739</td>
                 </tr>
                 <tr>
@@ -788,20 +806,94 @@ df['User_Segment'] = df.apply(segment_user, axis=1)</code></pre>
                     <td>¥1,623</td>
                     <td>4.19</td>
                     <td>-</td>
+                    <td>中</td>
+                    <td>中</td>
                     <td>¥82,778</td>
                 </tr>
             </table>
         </section>
 
         <section class="section">
-            <h2>七、A/B测试对比</h2>
+            <h2>七、基于新增指标的运营策略差异化</h2>
+            <p>用户分层解决了"谁是目标用户"的问题，但同一分层内的用户仍需进一步精细化运营。<strong>转化摩擦系数</strong>和<strong>活跃连接度</strong>两个指标作为<strong>运营策略的判断依据</strong>——结合用户分层结果，通过这两个指标判断具体的优惠力度和触达渠道，实现同一分层内的差异化运营。</p>
+
+            <h3>7.1 转化摩擦系数：判断需要多强的推力</h3>
+            <p>转化摩擦系数 = 浏览页数 / (购买次数 + 1)，反映用户的"纠结程度"。系数越高，说明用户看了很多页面才买一次（甚至没买），需要更强的外部推力。</p>
+            
+            <table>
+                <tr>
+                    <th>用户分层</th>
+                    <th>摩擦系数高</th>
+                    <th>摩擦系数低</th>
+                </tr>
+                <tr>
+                    <td><strong>高潜观望用户</strong></td>
+                    <td>大额优惠券（满500减100）+ 限时秒杀，打破犹豫</td>
+                    <td>精准商品推荐即可，用户本身决策快</td>
+                </tr>
+                <tr>
+                    <td><strong>隐形活跃者</strong></td>
+                    <td>拼团/裂变活动，利用社交关系降低决策门槛</td>
+                    <td>内容种草（测评文章、短视频），自然转化</td>
+                </tr>
+                <tr>
+                    <td><strong>新客户</strong></td>
+                    <td>首单大额优惠 + 客服1v1跟进</td>
+                    <td>新人专享礼包，轻量级引导</td>
+                </tr>
+                <tr>
+                    <td><strong>高潜流失客</strong></td>
+                    <td>专属召回券（高于常规优惠）+ 电话回访</td>
+                    <td>App推送个性化推荐，温和唤醒</td>
+                </tr>
+            </table>
+
+            <h3>7.2 活跃连接度：选择最有效的触达渠道</h3>
+            <p>活跃连接度综合了订阅状态和近期登录行为，反映用户与平台的"真实连接强度"。连接度低的用户，邮件可能石沉大海；连接度高的用户，App推送就能触达。</p>
+            
+            <table>
+                <tr>
+                    <th>用户分层</th>
+                    <th>活跃连接度高</th>
+                    <th>活跃连接度低</th>
+                </tr>
+                <tr>
+                    <td><strong>高潜观望用户</strong></td>
+                    <td>App推送 + 站内信，即时触达</td>
+                    <td>短信唤醒 + 电话跟进，主动触达</td>
+                </tr>
+                <tr>
+                    <td><strong>隐形活跃者</strong></td>
+                    <td>社区运营 + 积分激励，培养KOC</td>
+                    <td>邮件订阅引导 + 内容推送，重建连接</td>
+                </tr>
+                <tr>
+                    <td><strong>沉睡客户</strong></td>
+                    <td>App推送大额优惠券，快速激活</td>
+                    <td>短信/电话召回，了解流失原因</td>
+                </tr>
+                <tr>
+                    <td><strong>高潜流失客</strong></td>
+                    <td>站内信个性化挽留方案</td>
+                    <td>短信专属优惠 + 客服回访</td>
+                </tr>
+            </table>
+
+            <div class="key-finding">
+                <strong>运营策略设计思路</strong>
+                分层决定"给谁发"，摩擦系数决定"发多大的券"，活跃连接度决定"用什么渠道发"。三个维度组合，才能实现真正的千人千面运营。
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>八、A/B测试对比</h2>
             
             <div class="key-finding" style="margin-bottom: 20px; border-left-color: #3498db;">
                 <strong style="color: #3498db;">模拟说明</strong>
                 以下 A/B 测试是基于历史消费数据的模拟估算，非真实营销活动结果。真实 ROI 需要在实际营销活动后，通过对照组实验收集数据得出。
             </div>
             
-            <h3>7.1 模拟逻辑</h3>
+            <h3>8.1 模拟逻辑</h3>
             <p>基于用户历史消费数据，假设优惠券带来 <span class="highlight">1%</span> 的边际消费提升：</p>
             <div class="code-block">
                 <pre><code># 方案A：传统策略
@@ -817,7 +909,7 @@ optimized_baseline = optimized_users['Total_Spending'].sum()
 optimized_lift = optimized_baseline * 0.01  # 假设1%边际提升</code></pre>
             </div>
             
-            <h3>7.2 结果对比</h3>
+            <h3>8.2 结果对比</h3>
             <div class="ab-comparison">
                 <div class="ab-box a">
                     <h4>方案A：传统策略</h4>
@@ -849,7 +941,7 @@ optimized_lift = optimized_baseline * 0.01  # 假设1%边际提升</code></pre>
         </section>
 
         <section class="section">
-            <h2>八、核心启示</h2>
+            <h2>九、核心启示</h2>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="number">29</div>
@@ -873,6 +965,42 @@ optimized_lift = optimized_baseline * 0.01  # 假设1%边际提升</code></pre>
                 <strong>项目最大价值</strong>
                 传统RFM模型只看用户花了多少钱，新模型开始看用户花了多少时间、有多少预算。这种视角的转变带来了全新的用户群体发现和更精准的营销策略。
             </div>
+
+            <h3>新增指标的应用层次</h3>
+            <p>四个新增指标在分析中承担不同角色，形成"分层 → 策略 → 执行"的完整闭环：</p>
+            <table>
+                <tr>
+                    <th>指标</th>
+                    <th>在分层中的作用</th>
+                    <th>在运营中的作用</th>
+                    <th>解决的问题</th>
+                </tr>
+                <tr>
+                    <td><strong>意向度</strong></td>
+                    <td><span class="tag tag-orange">核心分层指标</span></td>
+                    <td>判断用户是否值得投入营销资源</td>
+                    <td>"用户想不想买？"</td>
+                </tr>
+                <tr>
+                    <td><strong>购买力背景</strong></td>
+                    <td><span class="tag tag-orange">核心分层指标</span></td>
+                    <td>推荐什么价格带的商品</td>
+                    <td>"用户有没有钱买？"</td>
+                </tr>
+                <tr>
+                    <td><strong>转化摩擦系数</strong></td>
+                    <td><span class="tag tag-blue">运营策略判断指标</span></td>
+                    <td>决定优惠力度和转化策略</td>
+                    <td>"用户有多纠结？需要多大力推？"</td>
+                </tr>
+                <tr>
+                    <td><strong>活跃连接度</strong></td>
+                    <td><span class="tag tag-blue">运营策略判断指标</span></td>
+                    <td>选择最有效的触达渠道</td>
+                    <td>"用户能不能触达得到？"</td>
+                </tr>
+            </table>
+            <p style="margin-top: 15px;">分层指标解决"<strong>给谁</strong>"的问题，运营策略判断指标解决"<strong>怎么给</strong>"的问题。两者结合，才能实现从"千人一面"到"千人千面"的跨越。</p>
         </section>
 
         <footer>
