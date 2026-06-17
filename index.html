@@ -641,11 +641,10 @@ df['Active_Connection'] = df.apply(calculate_active_connection, axis=1)</code></
             </div>
 
             <h3>4.4 购买力背景</h3>
-            <p>基于收入分层，作为分层后的修正标签。</p>
+            <p>同样是花了1000块，月入5万和月入5千的用户价值完全不同。我们用收入4分位数将用户分为4档，作为分层时的辅助标签——高收入低消费的用户值得重点转化，低收入高消费的用户需要维护忠诚度。</p>
             <div class="code-block">
-                <pre><code>income_bins = [0, 40000, 80000, 120000, float('inf')]
-income_labels = ['低收入', '中低收入', '中高收入', '高收入']
-df['Purchase_Power'] = pd.cut(df['Income'], bins=income_bins, labels=income_labels)</code></pre>
+                <pre><code>df['Purchase_Power'] = pd.qcut(df['Income'], q=4, 
+                                labels=['低收入', '中低收入', '中高收入', '高收入'])</code></pre>
             </div>
         </section>
 
