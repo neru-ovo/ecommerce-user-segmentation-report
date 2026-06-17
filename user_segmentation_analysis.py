@@ -67,9 +67,9 @@ def calculate_active_connection(row):
 
 df['Active_Connection'] = df.apply(calculate_active_connection, axis=1)
 
-income_bins = [0, 40000, 80000, 120000, float('inf')]
-income_labels = ['低收入', '中低收入', '中高收入', '高收入']
-df['Purchase_Power'] = pd.cut(df['Income'], bins=income_bins, labels=income_labels)
+# 【修改】统一使用4分位数分箱，与"收入前25%"的分析逻辑保持一致
+# qcut将数据等频分为4箱，每箱25%，边界由数据分布自动决定
+df['Purchase_Power'] = pd.qcut(df['Income'], q=4, labels=['低收入', '中低收入', '中高收入', '高收入'])
 
 print("\n=== RFM模型构建 ===")
 
